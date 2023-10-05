@@ -36,4 +36,75 @@ if(조건식)
     50미만   => 재수강
 
 ==> 코드
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
 
+int main(void)
+{
+	int score;
+	printf("점수를 입력해 주세요: ");
+	scanf("%d", &score);
+
+	if (score >= 0 && score <= 100)
+	{
+		printf("점수는 %d점 입니다.\n", score);
+
+		if (score >= 90 && score <= 100)
+			printf("학점은 A 입니다.\n");
+
+		else if (score >= 80 && score < 90)
+			printf("학점은 B 입니다.\n");
+
+		else if (score >= 70 && score < 80)
+			printf("학점은 C 입니다.\n");
+
+		else if (score >= 60 && score < 70)
+			printf("학점은 D 입니다.\n");
+
+		else if (score >= 50 && score < 60)
+			printf("학점은 F 입니다.\n");
+
+		else
+			printf("재수강 해야합니다.\n");
+	}
+
+	else
+		printf("0점에서 100점 사이를 입력하셔야 합니다.");
+
+	return 0;
+}
+
+* 다중 if문
+-> if문 안에 또 다른 조건식을 검사하고자 할 때 다중 if문을 사용한다.
+-> 다중 if문을 사용할 때와 사용하지 않을 때의 차이점
+: 예를 들어 입력받은 수가 양수인지 검사하고 짝수, 홀수를 판별할 때.
+1). 다중 if문을 사용했을 떄:
+if (input >= 0)
+	{
+		if (input % 2 == 0)
+			printf("입력받은 수 %d는 양수이며 짝수입니다.\n", input);
+
+		else
+			printf("입력받은 수 %d는 양수이며 홀수입니다.\n", input);
+	}
+
+	else
+		printf("입력받은 수 %d는 음수입니다.\n", input);
+
+2). 다중 if문을 사용하지 않았을 때:
+	if (input >= 0 && input % 2 == 0)
+		printf("입력한 수 %d는 양수이며 짝수입니다.\n", input);
+
+	else if (input >= 0 && input % 2 != 0)
+		printf("입력한 수 %d는 양수이며 짝수입니다.\n", input);
+
+	else
+		printf("입력한 수 %d는 음수입니다.\n", input);
+
+==> 위의 코드를 보면 알 수 있듯이, 다중 if문을 사용했을 경우, 여러개의 조건식이 있을 경우 
+각각의 조건식을 별개의 if문으로 사용하기 때문에 높은 가독성과 더불어 프로그램 코드를 단순하게
+만들수 있다. 그러나 다중 if문을 사용하지 않았을 때의 경우에는, 프로그램 코드가 복잡하게 만들어져서
+가독성이 떨어지며, 또한 조건식의 수가 많으면 많을수록 프로그램 코드를 만드는 과정에서 실수로 다른 코드를
+작성하는 오류가 발생할 수 있다.
+
+=> 위의 결과에서 보면 알 수 있듯이 다중 if문의 사용용도는 조건식이 여러개 있을 때, 프로그램 코드의 최적화를 위해 사용된다.
