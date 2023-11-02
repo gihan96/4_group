@@ -134,8 +134,8 @@ int SumArray(int Arry[], int Size)
 		result += Arry[i];
 	return result;
 }
--> 이런 식으로 해서 함수 SumArray를 이용해 배열 a의 모든 원소의 합을 구할 수 있다.
--> 이때 main함수에 사용할때 SumArray(a, 5)에서 a는 SumArray()라는 함수에 배열 a[]의 주소값을 전달한다는 것을 의미한다.
+이런 식으로 해서 함수 SumArray를 이용해 배열 a의 모든 원소의 합을 구할 수 있다.
+이때 main함수에 사용할때 SumArray(a, 5)에서 a는 SumArray()라는 함수에 배열 a[]의 주소값을 전달한다는 것을 의미한다.
 
 04. 재귀함수
 -> 재귀함수는 함수에서 같은 함수를 다시 호출한다는 것을 의미한다.
@@ -158,4 +158,57 @@ int factorial(int n)
 	else
 		return n * factorial(n - 1);
 }
--> ㅇ
+여기서 factorial(int n)함수를 보면 정수 n이 1보다 작거나 같을 때는 1을 반환하지만 아닐 경우에는 정수 n에 함수 자신인 factorial(n-1)을 곱하게 되어있다.
+즉 n * factorial(n-1)을 n의 값이 1이 될 때까지 진행 시키다 보면 정수 n 부터 1까지 곱해지는 결과값을 반환하게 된다.
+
+-> p265 예제 11. 정수형 배열 b[] = {20, 34, 12, 24, 54, 91, 9, 40, 81, 10}의 최대값과 최솟값 및 평균을 구하는 프로그램을 함수를 이용하여 만들고자 할 때
+#include <stdio.h>
+
+int MaxNum(int ary[], int Size);
+int MinNum(int ary[], int Size);
+float AverageNum(int ary[], int Size);
+int main(void)
+{
+	int b[] = { 20, 34, 12, 24, 54, 91, 9, 40, 81, 10 };
+	int ArySize = sizeof(b) / sizeof(int);
+
+	printf("배열 b의 최대값: %d\n", MaxNum(b, ArySize));
+	printf("배열 b의 최소값: %d\n", MinNum(b, ArySize));
+	printf("배열 b의 평균 : %.2f\n", AverageNum(b, ArySize));
+	return 0;
+}
+
+int MaxNum(int ary[], int Size)
+{
+	int num = ary[0];
+	int i;
+	for (i = 0; i < Size; i++)
+	{
+		if (num < ary[i])
+			num = ary[i];
+	}
+	return num;
+}
+int MinNum(int ary[], int Size)
+{
+	int num = ary[0];
+	int i;
+	for (i = 0; i < Size; i++)
+	{
+		if (num > ary[i])
+			num = ary[i];
+	}
+	return num;
+}
+float AverageNum(int ary[], int Size)
+{
+	float sum = 0;
+	int i;
+	for (i = 0; i < Size; i++)
+		sum += ary[i];
+
+	return (sum / Size);
+}
+위와 같이 최대값을 구하는 함수 MaxNum(int ary[], int Size), 최소값을 구하는 함수 int MinNum(int ary[], int Size), 평균을 구하는 함수 AverageNum(int ary[], int Size)를 선언해 
+main 함수에서 구하고자 하는 최대값과 최소값, 평균을 구할 수 있다.
+
