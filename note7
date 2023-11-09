@@ -14,4 +14,24 @@
     int* ptr = &i; 
 -> 일반 변수의 주소는 &를 이용하여 표현한다.
 
+-> 포인터의 변수의 크기는 char, int, double 등의 변수의 크기와 관계없이 4바이트로 일정하다.
+-> 참고로 배열은 포인터 상수이다.
+
+-> 예제 10-1. 포인터의 기본
+#include <stdio.h>
+
+int main(void)
+{
+	int i = 10;
+	int* ptr = &i;
+
+	printf("ptr의 주소 값 : %p\n", &ptr);  //ptr의 주소의 값이 출력된다.
+	printf("i의 주소 값 : %p\n", &i);        // i의 주소의 값이 출력된다.
+	printf("i의 주소값 : %p\n", ptr);       // ptr이 가리키는 i의 주소의 값이 출력된다.
+
+	printf("i의 값 : %d\n", i);               // i의 값 10이 출력된다.
+	printf("i의 값 : %d\n", *ptr);         // ptr이 가리키는 i의 주소에 있는 값 10이 출력된다.
+	return 0;
+}
+
 
