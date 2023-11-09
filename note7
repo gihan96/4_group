@@ -58,3 +58,61 @@ int main(void)
 }
 
 -> 예제 10-3. 포인터를 이용하지 않고 두 수 바꾸기
+#include <stdio.h>
+
+void Swap(int a, int b);
+int main(void)
+{
+	int x = 10, y = 5;
+	printf("Swap() 함수 실행 전\n");
+	printf("x = %d, y = %d이다.\n", x, y);
+
+	Swap(x, y);
+	printf("Swap() 함수 실행 후\n");
+	printf("x = %d, y = %d이다.\n", x, y);
+
+	return 0;
+}
+
+void Swap(int a, int b)
+{
+	int temp;
+	temp = a;
+	a = b; 
+	b = temp;
+}
+어떠한 두 개의 정수의 값을 서로 바꾸는 함수 Swap()를 만들어 실행하고자 한다.
+이때의 결과를 실행하면 Swap()함수 실행 전과 마찬가지로 x = 10, y = 5가 출력된다. 즉 Swap()함수를 실행했음에도 불구하고 실제 값은 바뀌지 않고 출력됬다.
+원래대로라면 값이 바뀌어 x = 5, y = 10가 되어야하는데, 그렇게 되지 않는 이유는 다음과 같다.
+우선 main()함수의 x, y와 Swap()함수의 a, b는 각각의 함수에서만 사용되어지는 변수이다. 그러다 보니 Swap()함수에 main()함수에 있는 x, y값을 대입해도,
+Swap()함수에 있는 변수의 값만 바뀌게 되고, main()함수에 있는 변수 x, y의 값은 변하지 않은 상태가 된다.
+
+-> 위와 같은 문제를 해결하기 위해서는 포인터를 사용하면 해결할 수 있다.
+
+-> 예제 10-4. 포인터를 이용하여 두 수 구하기
+#include <stdio.h>
+
+void Swap(int* a, int* b);
+int main(void)
+{
+	int x = 10, y = 5;
+	printf("Swap() 함수 실행 전\n");
+	printf("x = %d, y = %d이다.\n", x, y);
+
+	Swap(&x, &y);
+	printf("Swap() 함수 실행 후\n");
+	printf("x = %d, y = %d이다.\n", x, y);
+
+	return 0;
+}
+
+void Swap(int* a, int* b)
+{
+	int temp;
+	temp = *a;
+	*a = *b; 
+	*b = temp;
+}
+여기서 main()함수에서 사용되고 있는 Swap(&x, &y)함수의 경우 포인터 변수 a, b가  x, y의 주소값을 가리키고 있다. 그래서 swap()함수를 실행할 경우, x, y의 주소가 전달되는 것이므로,
+swap()함수를 끝마친 후 x, y의 값을 출력했을 때는 Swap()함수에서 바뀌어진 값, x = 5, y = 10이 출력된다.
+
