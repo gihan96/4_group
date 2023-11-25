@@ -119,4 +119,64 @@ int main(void)
   3). char* strcpy(char* s1, const char* s2) : 문자열 s1에 문자열 s2를 복사한다.
   4). char* strcat(char* s1, const char* s2) : 문자열 s1에 문자열 s2을 연결한다.
 
--> 예제 10-14. 문자열 처리 함수 사용하기
+11. 구조체와 열거형
+11- 1. 구조체의 정의와 변수선언
+-> 구조체란 서로 다른 자료형을 하나의 자료로 구조화한 자료형이다. 
+-> 구조체의 키워드는 struct를 사용하여 정의한다.
+-> struct 안의 각 구성 요소는 멤버라 부르며 중괄호({ }) 안에 정의한다.
+-> 마지막 중괄호( }) 다음에 반드시 세미콜론(;)을 넣어야 한다.
+
+-> 구조체의 예).
+struct book {
+	char title[40];
+	char author[40];
+	char press[40];
+	int page;
+	int price;
+};
+-> 위에서 보듯이 title, author, press는 문자형 자료형 char를 page, price는 정수형 변수 int 이 두개를 사용해 정의할 수 있다.
+
+-> 구조체를 사용하려면 구조체의 변수를 선언해야 한다.
+-> 우선 
+struct students {
+	char name[20];
+	char adress[30];
+	char tel[15];
+	int grade;
+	int age;
+};
+라는 구조체를 선언 한 후 
+int main()
+{
+   struct students st1;
+   struct students st2;
+
+   return 0;
+}
+로 main 함수에 students 구조체를 선언할 수 있다.
+
+-> 이 때 students의 구조체 변수의 메모리 구조는 다음과 같다.
+: name(20) + address(30) + tel(15) + grade(4) + age(4) = 73바이트의 메모리 크기를 가지고 있다.
+
+예제 11 - 1. 구조체의 메모리 크기 확인하기
+#include <stdio.h>
+
+struct list {
+	char name;
+	char gender;
+	int age;
+};
+
+int main(void)
+{
+	struct list st1 = { 'T', 'M', 25 };
+	printf("구조체 list의 크기는 %d이다.\n", sizeof(struct list));
+	printf("구조체 객체 st1의 크기는 %d이다.\n", sizeof(st1));
+
+	return 0;
+}
+-> 위와 같은 예시로 하면 name(1) + gender(1) + age(4) = 6 바이트가 나올 것이다.
+-> 그러나 실제로 출력하면 8바이트로 출력되서 나오는데, 그것은 char형 문자 배열의 경우 문자 뒤에 '\0'이 포함되어서 나온다. 그렇기 때문에 char형 문자열 변수의 크기는 문자의 크기 + 1의 크기가 된다.
+-> 즉 name과 gender의 경우 각각의 문자가 1개가 있으므로 name + gender + age = (1+1)+(1+1)+4 = 2 + 2 + 4 = 8이 출력된다.
+
+
