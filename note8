@@ -209,6 +209,123 @@ struct{
 -> 위와 같이 구조체 명을 기록하지 않을 경우 변수를 선언 할 때 마다 구조체의 정의 부분을 다시 작성해야 한다.
 
 11 - 2. 구조체의 접근과 선언
--> 구조
+-> 구조체도 일반 변수와 마찬가지로 선언과 초기화를 해야한다. 이 때 구조체를 초기화 하는 방법으로는 2가지가 있다.
+1).
+struct students{
+	char name[20];
+	char address[30];
+	int age;
+};
+struct students st1 = {"Moon", "Seoul", 28};
+
+2). 
+struct students{
+	char name[20];
+	char address[30];
+	int age;
+} st1 = {"Moon", "Seoul", 28};
+
+-> 이렇게 선언 및 초기화한 구조체의 맴버 변수에 접근하려면 도트(.) 연산자를 사용해야 하는데, 그 형식은 다음과 같다.
+-> 구조체_변수명.맴버명
+st1.name
+st1.address
+st1.age
+
+-> 예제 11 - 2 도트 연산자를 이용하여 구조체 접근하기
+#include <stdio.h>
+
+struct list {
+	char name;
+	char gender;
+	int age;
+};
+
+int main(void)
+{
+	struct list st1, st2;
+	st1.name = 'T';
+	st1.gender = 'M';
+	st1.age = 25;
+
+	st2.name = 'S';
+	st2.gender = 'F';
+	st2.age = 28;
+
+	printf("이름  성별  나이\n");
+	printf("-------------------\n");
+	printf(" %c %c %d\n", st1.name, st1.gender, st1.age);
+	printf(" %c %c %d\n", st2.name, st2.gender, st2.age);
+
+	return 0;
+}
+-> 위의 내용에서 보았듯이 st1.name은 list구조체 st1이 list의 맴버 name을 가리키고, st1.gender는 list구조체 st1이 list의 맴버 gender를 가리키고, st1.age는 list구조체 st1이 list의 맴버 age를 가리킨다.
+-> st2또한 마찬가지고 구조체 list의 각 맴버들을 가리키므로 위의 예제를 출력할 경우 각 구조체 변수의 맴버 name, gender, age 순으로 출력되는 것을 알 수있다.
+
+-> 구조체 로 선언한 객체도 일반 변수와 마찬가지로 할당 연산자를 이용하여 값을 저장할 수 있다.
+-> 예제 11 - 3. 구조체에서 할당 연산자 활용하기
+#include <stdio.h>
+
+struct list {
+	char name;
+	char gender;
+	int age;
+};
+
+int main(void)
+{
+	struct list st1 = { 'T', 'M', 25 };
+	struct list st2, st3 = { 'P', 'F', 30 };
+
+	st2 = st1;
+	st3.name = st1.name;
+	st3.gender = st1.gender;
+
+	printf(" 이름 성별 나이\n");
+	printf("------------\n");
+	printf("st1 %c %c %d\n", st1.name, st1.gender, st1.age);
+	printf("st2 %c %c %d\n", st2.name, st2.gender, st2.age);
+	printf("st3 %c %c %d\n", st3.name, st3.gender, st3.age);
+	return 0;
+}
+-> 위의 예제를 보면 우선 구조체 list의 변수 st1에는 name = 'T', gender = 'M', age = 25를 선언했다. 그리고 st2와 st3에는  name = 'P', gender = 'F', age = 30을 선언했다.
+-> 그리고 st2 = st1은 구조체 st2는 구조체 st1의 맴버 변수를 가져와 사용한다는 것을 의미하고, st3.name = st1.name와 st3.gender = st1.gender는 st3의 name과 gender는 st1의 name과 gender를 사용한다는 것을 의미한다.
+-> 따라서 출력시 st2는 st1과 마찬가지로 'T' 'M' 25가 출력되고 st3의 경우는 'T' 'M' 30이 출력된다는 것을 알 수 있다.
+
+11 - 3. 구조체의 재정의 
+-> 어떤 구조체 list를 선언하고 이를 main()함수에서 사용하고자 할 때 struct list st1이라고 지정하는데, 매번 이런식으로 지정하면 코드의 길이가 길어지면서 불편해 질 수 있다.
+-> 이때 사용하는 것이 typedef로 구조체의 자료형을 재정의하는 키워드가 있다.
+
+-> 예제 11 - 4. 구조체 재정의로 구조체 사용하기
+#include <stdio.h>
+
+struct students {
+	char name[20];
+	char address[30];
+	int age;
+};
+
+typedef struct students student;
+
+int main(void)
+{
+	student st1 = { "Moon", "Seoul", 25 };
+	struct students st2 = { "John", "London", 30 };
+
+	printf("학생 1은 성이 %s이고 %s에 살며 %d살이다.\n", st1.name, st1.address, st1.age);
+	printf("학생 2는 성이 %s이고 %s에 살며 %d살이다.\n", st2.name, st2.address, st2.age);
+	return 0;
+
+}
+-> 위의 예제와 같이 typdef를 선언한 student를 사용한 st1이나 원래 있던 구조체 students를 사용한 st2 이 두 개의 구조체 모두 출력할 때는 구조체 students의 맴버 변수를 출력한다는 것을 알 수 있다.
+
+-> typedef를 이용해 구조체를 정의할 때는 다음과 같이 재정의도 할 수 있다.
+typedef struct{
+    char name[20];
+    char address[30];
+    int age;
+} student;
+-> 이 때 재정의한 구조체의 객체를 선언하는 방법은 다음과 같다.
+-> student st1 = {"Moon", "Seoul", 25};
+
 
 
