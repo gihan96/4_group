@@ -428,7 +428,167 @@ int main(void)
 -> 위의 예제를 구조체 포인터 PA1이 A1의 주소값을 가리킨다. 따라서 pA1의 맴버변수 x, y, z의 값은 A1의 x, y, z의 값 즉 3.00, 1.00, 8.00이 출력된다.
 
 * 함수의 인자로 구조체 사용
--> 
+-> 구조체를 함수의 인자로 받아 사용할 수 있다.
+-> 예를 들얼 3차원의 좌표간 거리를 계산하는 프로그램을 함수로 작성한다고 가정한다.
+-> 우선 구조체를 인자로 받는 함수는 다음과 같이 나타낼 수 있다.
+
+-> 예제 11 - 7. 구조체를 인자로 받는 함수
+#include <stdio.h>
+#include <math.h>
+#define _CRT_SECURE_NO_WARNINGS
+struct ThreeDime {
+	double x;
+	double y;
+	double z;
+};
+
+typedef struct ThreeDime ThreeDime;
+
+double Distance1(ThreeDime a)
+{
+	double d;
+	d = sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
+	return d;
+}
+
+double Distance2(ThreeDime a, ThreeDime b)
+{
+	double d;
+	d = sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.y - b.y) * (a.y - b.y));
+	return d;
+}
+
+ThreeDime SymOri(ThreeDime a)
+{
+	a.x = -a.x;
+	a.y = -a.y;
+	a.z = -a.z;
+	return a;
+}
+int main(void)
+{
+	double D1, D2;
+	ThreeDime A1, A2, A3;
+
+	printf("3차원 점 A1의 x, y, z 좌표를 입력하시오\n");
+	scanf_s("%lf %lf %lf", &A1.x, &A1.y, &A1.z);
+
+	printf("3차원 점 A2의 x, y, z 좌표를 입력하시오\n");
+	scanf_s("%lf %lf %lf", &A2.x, &A2.y, &A2.z);
+
+	D1 = Distance1(A1);
+	D2 = Distance2(A1, A2);
+
+	A3 = SymOri(A1);
+
+	printf("\n점 A1과 원점의 거리는 %.2lf이다.\n", D1);
+	printf("점 A1과 점 A2의 거리는 %.2lf이다.\n", D2);
+	printf("점 A1을 원점에 대칭시킨 점의 x : %.2lf, y : %.2lf, z : %.2lf이다\n", A3.x, A3.y, A3.z);
+	return 0;
+
+}
+-> 위의 예제를 보면 알 수 있듯이 각 함수들이 구조체 ThreeDime을 인자로 받아 사용되었다는 것을 알 수 있다.
+-> 이때 구조체를 함수의 인자로 사용할 때 구조체의 크기 만큼의 메모리의 이동이 발생하다. 
+-> 만약 구조체를 함수의 인자로 사용할 경우 구조체 자체를 사용하는 것 보다는 포인터를 이용할 경우 메모리의 이동을 최소화해 효율적으로 작동할 수 있다.
+-> 구조체 포인터를 인자로 받는 함수의 함수는 다음과 같이 나타낼 수 있다.
+
+-> 예제 11 - 8. 구조체 포인터를 인자로 받는 함
+#include <stdio.h>
+#include <math.h>
+#define _CRT_SECURE_NO_WARNINGS
+struct ThreeDime {
+	double x;
+	double y;
+	double z;
+};
+
+typedef struct ThreeDime ThreeDime;
+
+double Distance1(ThreeDime* a)
+{
+	double d;
+	d = sqrt(a->x * a->x + a->y * a->y + a->z * a->z);
+	return d;
+}
+
+double Distance2(ThreeDime* a, ThreeDime* b)
+{
+	double d;
+	d = sqrt((a->x - b->x) * (a->x - b->x) + (a->y - b->y) * (a->y - b->y) + (a->y - b->y) * (a->y - b->y));
+	return d;
+}
+
+ThreeDime SymOri(ThreeDime* a)
+{
+	a->x = -a->x;
+	a->y = -a->y;
+	a->z = -a->z;
+	return *a;
+}
+int main(void)
+{
+	double D1, D2;
+	ThreeDime A1, A2, A3;
+
+	printf("3차원 점 A1의 x, y, z 좌표를 입력하시오\n");
+	scanf_s("%lf %lf %lf", &A1.x, &A1.y, &A1.z);
+
+	printf("3차원 점 A2의 x, y, z 좌표를 입력하시오\n");
+	scanf_s("%lf %lf %lf", &A2.x, &A2.y, &A2.z);
+
+	D1 = Distance1(&A1);
+	D2 = Distance2(&A1, &A2);
+
+	A3 = SymOri(&A1);
+
+	printf("\n점 A1과 원점의 거리는 %.2lf이다.\n", D1);
+	printf("점 A1과 점 A2의 거리는 %.2lf이다.\n", D2);
+	printf("점 A1을 원점에 대칭시킨 점의 x : %.2lf, y : %.2lf, z : %.2lf이다\n", A3.x, A3.y, A3.z);
+	return 0;
+
+}
+-> 위의 예제와 같이 구조체 포인터를 이용했을 경우에도 이전의 구조체 자체를 인자로 받는 함수의 결과와 동일한 값이 출력되는 것을 알 수 있다.
+
+11 - 5. 열거형
+
+* 열거형(enum)
+-> 열거형이란 순서가 있고 새로운 값(상수)을 가질 수 있는 사용자 정의 자료형이다.
+-> 열거형의 정의와 사용의 예는 다음과 같다.
+   enum 열거형_태그 {열거형_상수_1, 열거형_상수_2}; 
+   enum color {yello, red, blue, green magenta};
+
+-> 열거형의 선언의 예시는 다음과 같다.
+   enum color col = red;
+   enum color {yellp, red, blue, green, magenta} col;
+
+-> 열거형 상수 리스트에 포함된 변수에는 0번부터 1씩 증가하면서 상숫값이 차례대로 붙는다.
+-> 예를 들어 열거형  enum color {yello, red, blue, green magenta}이 있을 경우, yello가 0이 되고 red가 1, blue가 2, green이 3, magenta는 4가 된다.
+-> 만약  enum color {yello, red, blue = 5, green magenta}와 같이 bule를 5로 선언 했을 경우 다음 green은 6이 된다.
+
+-> 예제 11 - 9 열거형 사용하기
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+int main(void)
+{
+	enum {yello, red, blue, green} color;
+	printf("원하는 색을 입력하세요\n");
+	printf("0번 : 노란색, 1번 : 빨간색\n");
+	printf("2번 : 파란색, 3번 : 초록색\n");
+	scanf("%d", &color);
+
+	if (color == yello) printf("노란색 입니다.\n");
+	else if (color == red) printf("빨간색 입니다.\n");
+	else if (color == blue) printf("파란색 입니다.\n");
+	else if (color == green) printf("초록색 입니다.\n");
+
+	return 0;
+}
+-> 위의 예제와 같이 0번을 눌렀을 경우에는 노란색, 1번을 눌렀을 경우에는 빨간색, 2번을 눌렀을 경우 파란색, 3번을 눌렀을 경우 초록색이 출력되는 것을 알 수 있다.
+
+-> 여기서 만약 blue = 5 인 enum {yello, red, blue = 5, green} color;로 변경했을 경우 2,3,4번을 차례대로 눌렀을 때는 아무런 것도 출력되 되지 않았고, 5번을 눌렀을 경우 파란색이 6번을 눌렀을 경우 초록색이 출력되는 것을 알 수 있다.
+
+
 
 
 
