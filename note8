@@ -327,5 +327,56 @@ typedef struct{
 -> 이 때 재정의한 구조체의 객체를 선언하는 방법은 다음과 같다.
 -> student st1 = {"Moon", "Seoul", 25};
 
+-> 3차원 좌표로 표현하여 문제를 해결하는 방법은 수학이나 공학에서 자주 사용하는데, 구조체를 이용하면 3차원 좌표를 계산하는 프로그램을 만들 수 있다. 
+-> 우선 구조체를 이용하여 3차원 좌표를 표시하면 다음과 같이 정의할 수 있다.
+struct ThreeDime {
+	double x;
+	double y;
+	double z;
+};
+-> 그 다음 3차원상에서 점 A1(x1, y1, z1)과 원점의 거리 D는 다음과 같다.
+-> D = ROOT(x1^2 + y1^2 + z1^2)
+
+-> 점 A1(x1, y1, z1)과 점 A2(x2, y2, z2)사이의 거리 D는 다음과 같다.
+-> D = ROOT((x1-x2)^2 + (y1 - y2)^2 + (z1 - z2)^2)
+
+-> 여기서 ROOT의 기능을 수행하는 함수는 sqrt()인데, 이 함수는 math.h라는 헤더파일에 정의되어 있다.
+
+-> 예제 11 - 5. 구조체를 이용하여 3차원 계산하기.
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <math.h>
+struct ThreeDime {
+	double x;
+	double y;
+	double z;
+};
+typedef struct ThreeDime ThreeDime;
+int main(void)
+{
+	double D1, D2;
+	ThreeDime A1, A2;
+
+	printf("3차원 점 A1의 x, y, z 좌표를 입력하시오.\n");
+	scanf("%lf %lf %lf", &A1.x, &A1.y, &A1.z);
+
+
+	printf("\n3차원 점 A2의 x, y, z 좌표를 입력하시오.\n");
+	scanf("%lf %lf %lf", &A2.x, &A2.y, &A2.z);
+
+	D1 = sqrt(A1.x * A1.x + A1.y * A1.y + A1.z * A1.z);
+
+	D2 = sqrt((A1.x - A2.x) * (A1.x - A2.x) + (A1.y - A2.y) * (A1.y - A2.y) + (A1.z - A2.z) * (A1.z - A2.z));
+
+	printf("\n점 A1과 원점의 거리는 %.2lf이다\n", D1);
+	printf("점 A1과 점 A2의 거리는 %.2lf이다.\n", D2);
+
+	return 0;
+
+}
+-> 위의 예제를 보면 만약 점 A1의 좌표에 4, 1, 5를 대입하고, 점 A2의 좌표에 3, 8, 2를 대입할 경우 D1 = 6.48, D2 = 7.68 순으로 출력되어진다.
+
+11 - 4. 구조체의 사용
+
 
 
