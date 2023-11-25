@@ -112,6 +112,8 @@ int main(void)
 }
 -> 위의 예제와 같이 할 때 "c language"가 "C LANGUAGE"로 출력되는 것을 알 수 있다.
 
+* 문자열 처리함수
+
 -> 문자가 아닌 문자열을 처리할 때 string.h이라는 헤더 파일에 있는 함수를 이용하여 처리할 있다.
 -> 문자열을 처리하는 함수는 다음과 같다.
   1). size_t strlen(const char*) : 문자열의 크기를 알아낸다.
@@ -120,7 +122,9 @@ int main(void)
   4). char* strcat(char* s1, const char* s2) : 문자열 s1에 문자열 s2을 연결한다.
 
 11. 구조체와 열거형
+
 11- 1. 구조체의 정의와 변수선언
+*구조체의 정의
 -> 구조체란 서로 다른 자료형을 하나의 자료로 구조화한 자료형이다. 
 -> 구조체의 키워드는 struct를 사용하여 정의한다.
 -> struct 안의 각 구성 요소는 멤버라 부르며 중괄호({ }) 안에 정의한다.
@@ -136,6 +140,7 @@ struct book {
 };
 -> 위에서 보듯이 title, author, press는 문자형 자료형 char를 page, price는 정수형 변수 int 이 두개를 사용해 정의할 수 있다.
 
+* 구조체 변수의 선언 
 -> 구조체를 사용하려면 구조체의 변수를 선언해야 한다.
 -> 우선 
 struct students {
@@ -377,6 +382,54 @@ int main(void)
 -> 위의 예제를 보면 만약 점 A1의 좌표에 4, 1, 5를 대입하고, 점 A2의 좌표에 3, 8, 2를 대입할 경우 D1 = 6.48, D2 = 7.68 순으로 출력되어진다.
 
 11 - 4. 구조체의 사용
+
+* 포인터를 이용한 구조체 사용
+-> 일반변수 형태로 정의한 구조체의 맴버 변수에 접근하기 위해서는 도트(.)연산자를 사용한다.
+-> 만약 구조체 포인터를 이용하여 포인터 변수 형태로 정의한 구조체의 맴버 변수는 화살표(->)연산자를 이용하여 접근한다.
+-> 그조체 포인터의 선언과 초기화 방법은 다음과 같다.
+struct ThreeDime {
+	double x;
+	double y;
+	double z;
+};
+typedef struct ThreeDime ThreeDime;
+ThreeDime A1 = {3, 1, 8};
+ThreeDime* pA1 = &A1
+-> 여기서 보면 포인터 pA1은 일반 변수 A1의 주소값을 가리키고 있다. 따라서 pA1의 맴버 변수의 값을 출력했을 경우 A1의 맴버 변수의 값이 출력되는 것을 알 수 있을 것이다.
+
+-> 구조체 포인터를 이용한 구조체 맴버 접근 형식과 사용의 예시는 다음과 같다.
+구조체_포인터->맴버명
+pA1->x;
+pA1->y;
+pA1->z;
+
+-> 예제 11 - 6. 구조체 포인터를 이용하여 구조체 맴버 접근하기
+#include <stdio.h>
+
+struct ThreeDime {
+	double x;
+	double y;
+	double z;
+};
+
+typedef struct ThreeDime ThreeDime;
+
+int main(void)
+{
+	ThreeDime A1 = { 3, 1, 8 };
+
+	ThreeDime* pA1 = &A1;
+
+	printf("3차원 점 A1의 x : %.2lf, y : %.2lf, z : %.2lf이다\n", pA1->x, pA1->y, pA1->z);
+
+	return 0;
+
+}
+-> 위의 예제를 구조체 포인터 PA1이 A1의 주소값을 가리킨다. 따라서 pA1의 맴버변수 x, y, z의 값은 A1의 x, y, z의 값 즉 3.00, 1.00, 8.00이 출력된다.
+
+* 함수의 인자로 구조체 사용
+-> 
+
 
 
 
