@@ -87,3 +87,36 @@ int main(void)
 }
 위의 코드와 같이 작성하면 "C LANGUAGE"가 출력된다.
 
+-> 위와 같이 문자의 크기를 변경하는 것은 소문자의 아스키코드에서 32를 빼도 되지만 ctype.h이라는 헤더 파일에 있는 함수들을 이용해서 만들 수 있다.
+-> 문자를 처리하는 함수는 다음과 같다.
+  1). toupper(char) : 무조건 영문 대문자로 변환한다.
+  2). tolower(char) : 무조건 영문 소문자로 변환한다.
+  3). _toupper(char) : 영문 소문자를 대문자로 변환한다.
+  4). _tolower(char) : 영문 대문자를 소문자로 변환한다.
+
+-> 예제 10-12. 문자 처리 함수 이용하기
+#include <stdio.h>
+#include <ctype.h>
+
+int main(void)
+{
+	char* pC = "c language";
+
+	while (*pC)
+	{
+		printf("%c", toupper(*pC++));
+	}
+
+	printf("\n");
+	return 0;
+}
+-> 위의 예제와 같이 할 때 "c language"가 "C LANGUAGE"로 출력되는 것을 알 수 있다.
+
+-> 문자가 아닌 문자열을 처리할 때 string.h이라는 헤더 파일에 있는 함수를 이용하여 처리할 있다.
+-> 문자열을 처리하는 함수는 다음과 같다.
+  1). size_t strlen(const char*) : 문자열의 크기를 알아낸다.
+  2). int strcmp(const char* s1, const char* c2) : 문자열 c1과 c2의 크기를 비교한다.
+  3). char* strcpy(char* s1, const char* s2) : 문자열 s1에 문자열 s2를 복사한다.
+  4). char* strcat(char* s1, const char* s2) : 문자열 s1에 문자열 s2을 연결한다.
+
+-> 예제 10-14. 문자열 처리 함수 사용하기
