@@ -1,3 +1,23 @@
 10.4 포인터와 문자열
 * 포인터를 이용한 문자열 선언방법
 -> ex) char* p = "MOON" 이 있다 고 할 떄, 포인터 p의 각 주소 스택에 , p = 'M', p+1 = 'O', p+2 = 'O', p+3 = 'O', p+4 = '\0' 순으로 쌓인다. 
+
+-> 예제 10 - 9. 포인터를 이용하여 문자열 출력하기
+#include <stdio.h>
+
+int main(void)
+{
+	char* pC = "C programing";
+	printf("문자열을 변환 기호를 이용하여 출력\n");
+	printf("%s\n", pC);
+
+	printf("반복문을 이용해 한 글자씩 출력\n");
+	while (*pC)
+		printf("%c", *pC++);
+	printf("\n");
+
+	return 0;
+} 
+위의 예제를 보면 while(*pC)는 *(pC + 0)부터 *pC의 주소에 저장된 모든 값이 출력될 때 까지 만든다. 그 후  printf("%c", *pC++);를 통해 *pC + 0 부터 시작해서 다음 글자가 하나씩 출럭된다.
+그래서 결과를 보면 위의 "문자열을 변환 기호를 이용하여 출력"과 마찬가지로 "C programing"이 출력된다.
+
