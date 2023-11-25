@@ -179,4 +179,36 @@ int main(void)
 -> 그러나 실제로 출력하면 8바이트로 출력되서 나오는데, 그것은 char형 문자 배열의 경우 문자 뒤에 '\0'이 포함되어서 나온다. 그렇기 때문에 char형 문자열 변수의 크기는 문자의 크기 + 1의 크기가 된다.
 -> 즉 name과 gender의 경우 각각의 문자가 1개가 있으므로 name + gender + age = (1+1)+(1+1)+4 = 2 + 2 + 4 = 8이 출력된다.
 
+-> 구조체를 정의하면서 변수를 선언하는 방법은 다음과 같이 두 가지가 있다.
+ 1). 
+struct students {
+	char name[20];
+	char address[30];
+	char tel[15];
+	int grade;
+	int age;
+} st1, st2;
+-> 위와 같이 구조체를 정의함과 동시에 변수를 선언한다.
+
+2). 
+struct{
+	char name[20];
+	char address[30];
+	char tel[15];
+	int grade;
+	int age;
+} st1;
+
+struct{
+	char name[20];
+	char address[30];
+	char tel[15];
+	int grade;
+	int age;
+} st2;
+-> 위와 같이 구조체 명을 기록하지 않을 경우 변수를 선언 할 때 마다 구조체의 정의 부분을 다시 작성해야 한다.
+
+11 - 2. 구조체의 접근과 선언
+-> 구조
+
 
