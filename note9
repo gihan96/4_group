@@ -482,6 +482,88 @@ for(i = 0; i < 256; i++)
 6). pBufOut[i * 256 + j] = 255 - pBufIn[i * 256 + j];의 식은  pBufOut[i * 256 + j]의 화소 값은 화소의 최대값 255에서 pBufIn[i * 256 + j]의 화소값을 뺀 값과 같다는 의미가 된다.
 
 * 예제 13 - 7. 반전 영상 만들기 프로그램.
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#define SIZE 256 * 256
+typedef unsigned char BYTE;
+
+void main()
+{
+	int i, j;
+	FILE* fpIn, * fpOut;
+	BYTE* pBufIn = (BYTE*)malloc(SIZE);
+	BYTE* pBufOut = (BYTE*)malloc(SIZE);
+	fpIn = fopen("lena256.raw", "rb");
+	fpOut = fopen("lenainvert256.raw", "wb");
+	fread(pBufIn, 1, SIZE, fpIn);
+
+	for (i = 0; i < 256; i++)
+	{
+		for (j = 0; j < 256; j++)
+		{
+			pBufOut[i * 256 + j] = 255 - pBufIn[i * 256 + j];
+		}
+	}
+
+	fwrite(pBufOut, 1, SIZE, fpOut);
+	fclose(fpIn);
+	fclose(fpOut);
+	free(pBufIn);
+	free(pBufOut);
+}
+
+* 이진 영상 만들기
+-> 이진 영상은 검은색 또는 흰색으로만 구성된 영상으로 화소값은 0 또는 255를 말한다.
+-> 이진 영상을 만드는 방법은 기준이 되는 값을 정하여 그 값 미만은 검은색(0)으로, 이상은 흰색(255)로 처리하는 방식으로 이진 영상을 만든다.
+
+* 이진 영상의 주요 소스
+for (i = 0; i < 256; i++)
+{
+	for (j = 0; j < 256; j++)
+	{
+		if(pBufIn[i * 256 + j] >= 128)
+		   pBufOut[i * 256 + j] = 255;
+		else
+		   pBufOut[i * 256 + j] = 0;	
+	} 
+}
+-> 위 소스에서는 흑백 영상의 화소 중간값인 128을 기준으로 정하여 128 이상인 화소는 흰색(255)으로, 128보다 작은 화소는 검은색(0)으로 처리했다.
+
+* 예제 13 - 8. 이진 영상 만들기
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#define SIZE 256 * 256
+typedef unsigned char BYTE;
+
+void main()
+{
+	int i, j;
+	FILE* fpIn, * fpOut;
+	BYTE* pBufIn = (BYTE*)malloc(SIZE);
+	BYTE* pBufOut = (BYTE*)malloc(SIZE);
+	fpIn = fopen("lena256.raw", "rb");
+	fpOut = fopen("lenainvert256.raw", "wb");
+	fread(pBufIn, 1, SIZE, fpIn);
+
+	for (i = 0; i < 256; i++)
+	{
+		for (j = 0; j < 256; j++)
+		{
+			if (pBufIn[i * 256 + j] >= 128)
+				pBufOut[i * 256 + j] = 255;
+			else
+				pBufOut[i * 256 + j] = 0;
+		}
+	}
+
+	fwrite(pBufOut, 1, SIZE, fpOut);
+	fclose(fpIn);
+	fclose(fpOut);
+	free(pBufIn);
+	free(pBufOut);
+}
 
 * p.381 연습문제 06
 #define _CRT_SECURE_NO_WARNINGS
